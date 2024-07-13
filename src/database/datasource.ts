@@ -1,6 +1,10 @@
-import { DataSource } from 'typeorm';
+//import { User } from 'src/domain/user/user.entity';
+import 'reflect-metadata';
 
-export const appDataSource = new DataSource({
+import { DataSource } from 'typeorm';
+//import { Post } from '@/domain/post/post.entity';
+
+export const AppDataSource = new DataSource({
   type: 'postgres',
   host: 'localhost',
   port: 5432,
@@ -8,5 +12,8 @@ export const appDataSource = new DataSource({
   password: 'test',
   database: 'blog',
   logging: true,
-  entities: ['../domain/**/*.entity{.ts,.js}'],
+  entities: ['./**/*.entity.ts'],
+  // '../**/*.entity.{ts,js}'
+  migrations: ['src/migrations/*.ts'],
+  // migrationsTableName: 'custom_migration_table',
 });

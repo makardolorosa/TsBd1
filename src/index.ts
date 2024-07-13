@@ -1,24 +1,27 @@
 import express, { Express } from 'express';
 
-import { appDataSource } from './database/datasource';
+import { AppDataSource } from './database/datasource';
+import { authRouter } from './routes/auth.routes';
+import { userRouter } from './routes/user_routes';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
 const app: Express = express();
 
 app.use(express.json());
 
-appDataSource
-  .initialize()
-  .then(() => {
+AppDataSource.initialize()
+  .then(async () => {
     console.log('Data Source has been initialized!');
+    const host = process.env.HOST ?? 'localhost';
+    const port = process.env.PORT ? Number(process.env.PORT) : 3002;
+    const app = express();
+    app.use(express.json());
+    app.use('/users', userRouter);
+    app.use('/auth', authRouter);
+    app.listen(port, host, () => {
+      console.log(`[ready] http://${host}${port}`);
+    });
   })
-  .catch((err) => {
-    console.error('Error during Data Source initialization', err);
-  });
-
-app.get('/', (_req, res) => {
-  return res.send('Hello World!');
-});
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+  .catch((error) => console.log(error));

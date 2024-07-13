@@ -3,6 +3,9 @@
     "target": "ESNext",
     "module": "CommonJS",
     "baseUrl": ".",
+    "strictNullChecks":false, 
+   // "strictPropertyInitialization": false,
+    "experimentalDecorators": true,       /////////////////
     "paths": {
       "@/*": ["src/*"]
     },
@@ -10,14 +13,15 @@
     "outDir": "dist",
     "importsNotUsedAsValues": "remove",
     "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noPropertyAccessFromIndexSignature": false,
+   // "noUnusedParameters" : true, 
     "skipLibCheck": true,
     "ignoreDeprecations": "5.0",
-    "types": ["vitest/globals"]
+  //  "types": ["vitest/globals"]
   },
-  "extends": [],
   "exclude": ["node_modules"],
   "include": ["src/**/*.ts"]
 }
